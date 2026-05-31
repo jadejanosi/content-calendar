@@ -13,7 +13,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         email: email,
-        listIds: [6],
+        listIds: [5],
         updateEnabled: true
       }),
     });
