@@ -3,13 +3,6 @@ export default async function handler(req, res) {
 
   const { niche, stage, platform, frequency, goal } = req.body;
 
-  const freqMap = {
-    '1–2x/week': 10,
-    '3–4x/week': 20,
-    '5–7x/week': 30
-  };
-  const postCount = freqMap[frequency] || 20;
-
   const prompt = `You are a content strategist for digital product creators. Generate a personalized 30-day content calendar.
 
 User profile:
@@ -45,7 +38,11 @@ Rules:
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
+      },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
         max_tokens: 8000,
